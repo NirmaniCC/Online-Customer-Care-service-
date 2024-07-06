@@ -11,9 +11,9 @@
 </head>
 <body>
 	   <%
-		if (request.getSession().getAttribute("employeeObj") != null) {
+		if (request.getSession().getAttribute("userObj") != null) {
 		    // If the "employeeObj" session attribute exists, remove it
-		    request.getSession().removeAttribute("employeeObj");
+		    request.getSession().removeAttribute("userObj");
 		    // Redirect the user to the login page
 		    response.sendRedirect("login.jsp");
 		}

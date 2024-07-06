@@ -34,7 +34,7 @@
 		   
 		    	query = "delete from tickets where ticket_id = '" + id + "'";
 		    	rowsAffected = stmt.executeUpdate(query);
-		    	response.sendRedirect("tickets.jsp");
+		    	response.sendRedirect("profile.jsp");
 		    
 		    
 		    
