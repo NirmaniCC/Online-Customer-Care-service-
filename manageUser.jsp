@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,134 +106,16 @@
             <hr>
             <!-- Sidebar Navidation Menus-->
             <ul class="list-unstyled">
-                <li class="active"> <a href="mainAdminDashboard.jsp">Profile</a></li>
-                <li > <a href="feedbacks.jsp">Feedbacks</a></li>
+                <li > <a href="mainAdminDashboard.jsp">Profile</a></li>
+                <li > <a href="users.jsp">Users</a></li>
                 
             </ul>
         </nav>
 
         <div class="content-inner">
 
-            <!--***** REPORT-1 *****-->     
-            <div class="row" id="report1">
-            	<%
-	               try {
-	                   con = DBConnect.getConnection();
-	                   String sql = "SELECT COUNT(*) AS articleCount FROM articles";
-	                   PreparedStatement ps = con.prepareStatement(sql);
-	                   ResultSet rs = ps.executeQuery();
-	                   if (rs.next()) {
-	                       int count = rs.getInt("articleCount");
-	              
-	            %>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <div class="card-block">
-                            <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i> <%= count%></h2>
-                                <span class="text-muted">Articles</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div> 
-                <%
-	                    }
-	                    con.close();
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            %>
-	            <%
-	               try {
-	                   con = DBConnect.getConnection();
-	                   String sql = "SELECT COUNT(*) AS feedbackCount FROM feedback";
-	                   PreparedStatement ps = con.prepareStatement(sql);
-	                   ResultSet rs = ps.executeQuery();
-	                   if (rs.next()) {
-	                       int count = rs.getInt("feedbackCount");
-	              
-	            %>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <div class="card-block">
-                            <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-danger"></i> <%= count%></h2>
-                                <span class="text-muted">Feedbacks</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <%
-	                    }
-	                    con.close();
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            %>
-	            <%
-	               try {
-	                   con = DBConnect.getConnection();
-	                   String sql = "SELECT COUNT(*) AS userCount FROM users";
-	                   PreparedStatement ps = con.prepareStatement(sql);
-	                   ResultSet rs = ps.executeQuery();
-	                   if (rs.next()) {
-	                       int count = rs.getInt("userCount");
-	              
-	            %>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <div class="card-block"> 
-                            <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-warning"></i> <%= count%></h2>
-                                <span class="text-muted">Users </span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <%
-	                    }
-	                    con.close();
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            %>
-                <%
-	               try {
-	                   con = DBConnect.getConnection();
-	                   String sql = "SELECT COUNT(*) AS adminCount FROM admin";
-	                   PreparedStatement ps = con.prepareStatement(sql);
-	                   ResultSet rs = ps.executeQuery();
-	                   if (rs.next()) {
-	                       int count = rs.getInt("adminCount");
-	              
-	            %>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <div class="card-block"> 
-                            <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-info"></i> <%= count%></h2>
-                                <span class="text-muted">Employees</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div> 
-                <%
-	                    }
-	                    con.close();
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            %>             
-            </div>
             
-            
-                              
-                               
-                               <div class="row">
+            <div class="row">
 				                <div class="col-md-12">
 				
 				                    <!--***** USER INFO *****-->
@@ -242,46 +124,50 @@
 				                            <h3><i class="fa fa-user-circle"></i> User Info</h3>
 				                        </div>
 				                        <br>
-				                        <form method="post" action="/CustomerCare/UpdateAdminServelet">
+				                        <form method="post" action="/CustomerCare/updateAdminUserServelet">
 				                        <%
 			                              try {         
-									        String id = employeeObj.getId();
+			                            	String mob = request.getParameter("id");
 									        con = DBConnect.getConnection();
-											String s1 = "SELECT * FROM admin WHERE admin_id = ?";
+											String s1 = "SELECT * FROM users WHERE user_id = ?";
 											PreparedStatement pstmt = con.prepareStatement(s1);
-											pstmt.setString(1, id); // Use 'nic' variable instead of 'mob'
+											pstmt.setString(1, mob); // Use 'nic' variable instead of 'mob'
 											ResultSet rs1 = pstmt.executeQuery();
 											while (rs1.next()) {
 											%>
 				                            <div class="row">
 				                                <div class="col-md-6">
 				                                    <div class="form-group">
-				                                        <label for="name">Employee Id</label>
+				                                        <label for="name">User Id</label>
 				                                        <input type="text" class="form-control" name="id" value="<%= rs1.getString(1)%>" readonly>
 				                                    </div>
 				                                    <div class="form-group">
-				                                        <label for="name">Full Name</label>
-				                                        <input type="text" class="form-control" name="name" value="<%= rs1.getString(2)%>">
+				                                        <label for="name">User Name</label>
+				                                        <input type="text" class="form-control" name="username" value="<%= rs1.getString(2)%>">
 				                                    </div>
 				                                    <div class="form-group">
-				                                        <label for="name">Email</label>
-				                                        <input type="text" class="form-control" name="email" value="<%= rs1.getString(3)%>">
+				                                        <label for="name">Full Name</label>
+				                                        <input type="text" class="form-control" name="name" value="<%= rs1.getString(3)%>">
 				                                    </div>
 				                                </div>
-				                                <div class="col-md-6"> 
+				                                <div class="col-md-6">
+				                                	<div class="form-group">
+				                                        <label for="name">Email</label>
+				                                        <input type="text" class="form-control" name="email" value="<%= rs1.getString(4)%>">
+				                                    </div> 
 				                                    <div class="form-group">
 				                                        <label for="name">Mobile</label>
-				                                        <input type="text" class="form-control" name="mobile" value="<%= rs1.getString(4)%>">
+				                                        <input type="text" class="form-control" name="mobile" value="<%= rs1.getString(5)%>">
 				                                    </div>
 				
 				                                    <div class="form-group">
 				                                        <label for="name">Password</label>
-				                                        <input type="text" class="form-control" name="password" value="<%= rs1.getString(5)%>">
+				                                        <input type="text" class="form-control" name="password" value="<%= rs1.getString(6)%>">
 				                                    </div>
 				                                </div>
 				                            </div> 
 				                            
-				                            <button type="submit" class="btn btn-general btn-blue mr-2">Submit</button>  
+				                            <button type="submit" class="btn btn-general btn-blue mr-2">Update</button>  
 				                            <button type="reset" class="btn btn-general btn-white">Cancel</button> 
 				                            <%
 											 }
@@ -293,8 +179,14 @@
 				                        </form>
 				                    </div>
 				                    </div>
-                               </div>
-                               </div>
+            
+                              
+                               
+                               
+							       
+				               
+                 </div>
+                 </div>
                                     
     </div> 
 
